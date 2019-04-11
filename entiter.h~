@@ -1,0 +1,39 @@
+#ifndef ENEMY_H_INCLUDED
+#define ENEMY_H_INCLUDED
+#include <stdio.h>
+#include <stdlib.h>
+
+
+/**
+* @struct Enemie
+* @brief struct for Enemie
+*/
+
+
+struct Enemie{
+	SDL_Surface *imgR[2]; /*!< Surface Right*/
+
+	SDL_Surface *imgL[2]; /*!< Surface Left*/
+ 
+	SDL_Rect pos; /*!< position*/
+
+	int sante; /*!< vie*/
+
+	int active; /*!< actif*/
+
+	int direction;  /*!< gauche ou droite*/
+
+	int vitX; /*!< vitesse*/
+
+};
+struct Enemie Enemie;
+
+void initEnemy();
+void detectPlayer();
+void moveEnemy();
+int gotHit();
+void drawEnemy(SDL_Surface *screen, int *frame);
+
+
+#endif
+

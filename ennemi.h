@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+
+
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
+#include <time.h>
+
+#define W_Screen 750
+#define H_Screen 600
+#define CMode 32
+
+#define SPEED 5
+
+
+#define SPRITE_H 150
+#define SPRITE_W 300
+#define MAX_FRAMES 2
+
+
+
+                     #define W_BackgImg 750
+                     #define H_BackgImg 600
+
+typedef struct enemy
+{
+	SDL_Surface* spriteleft;
+	SDL_Surface* spriteright;
+
+	SDL_Rect frame;
+	SDL_Rect dst;
+}Enemy;
+
+int main(int argc, char** argv);
+

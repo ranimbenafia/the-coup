@@ -1,0 +1,124 @@
+#include "Enemie.h"
+#include "player.h"
+#include "level1.h"
+#include "bullet.h"
+
+/**
+* @file Enemie.c
+* @brief Enemie
+* @author C Inno++
+* @version 0.1
+* @date May 13, 2016
+*
+* Testing program for game
+*
+*/
+/**
+* @brief initEnemy
+* @return Nothing
+*/
+void initEnemy()
+{
+	Enemie.imgR[0] = IMG_Load("img/t-1-r.png");
+	Enemie.imgR[1] = IMG_Load("img/t-2-r.png");
+	Enemie.imgL[0] = IMG_Load("img/t-1-l.png");
+	Enemie.imgL[1] = IMG_Load("img/t-2-l.png");
+	Enemie.pos.x = 800;
+	Enemie.pos.y = player.coords.y-100; 
+	Enemie.sante = 15;
+	Enemie.active = 1;
+	Enemie.direction = 1;
+	Enemie.vitX = 1;
+}
+/**
+* @brief moveEnemy
+* @return Nothing
+*/
+void moveEnemy()
+{
+		if((player.coords.x - Enemie.pos.x) > 0)
+                {
+			Enemie.direction = 0;
+			Enemie.pos.x += Enemie.vitX;
+			Enemie.pos.y = player.coords.y-100;
+		}
+               else if((player.coords.x - Enemie.pos.x) < 0)
+                {
+			Enemie.direction = 1;
+			Enemie.pos.x -= Enemie.vitX;
+			Enemie.pos.y = player.coords.y-100;
+		}
+}
+/**
+* @brief drawEnemy
+* @param screen screen of game
+* @param frame count of image
+* @return Nothing
+*/
+void drawEnemy(SDL_Surface *screen, int *frame)
+{
+
+	if (Enemie.active==1)
+{
+        SDL_Rect drawRect;	
+	drawRect.x = Enemie.pos.x - camera.x;
+	drawRect.y = Enemie.pos.y - camera.y;
+	if(Enemie.direction == 0) 
+        {
+                        (*frame)++;
+			if(*frame == 1) 
+                        {(*frame) = 0;} 
+           SDL_BlitSurface(Enemie.imgR[*frame],NULL,screen,&drawRect);
+        }
+	else if(Enemie.direction == 1) 
+        {
+                        (*frame)++;
+			if(*frame == 1) 
+                        {(*frame) = 0;}
+               SDL_BlitSurface(Enemie.imgL[*frame],NULL,screen,&drawRect);
+        }
+}
+
+
+            if (Enemie.active==0)
+                 {
+                    initEnemy();
+                    Enemie.pos.x=player.coords.x+900;
+                    Enemie.active=1;
+                    Enemie.pos.y=player.coords.y-100;
+                  }
+}
+
+/**
+* @brief gotHit
+* @return int
+*/
+int gotHit()
+{
+  if(Enemie.direction == 0)
+     {
+       if(((Enemie.pos.x + Enemie.pos.w) >= bullet.pos.x) && bullet.active == 1)
+        {
+		Enemie.pos.x -= 10;
+                Enemie.sante -= 3 ;
+		readBullet();
+	}
+     }
+	else if(Enemie.direction == 1)
+      {
+         if(((bullet.pos.x + bullet.pos.w) >= Enemie.pos.x)&& bullet.active == 1)
+        {
+		Enemie.pos.x += 10;
+                Enemie.sante -= 3 ;
+		readBullet();
+	}
+}
+if(Enemie.sante <= 0)
+{
+Enemie.active=0;
+}
+return Enemie.sante;
+}
+
+
+
